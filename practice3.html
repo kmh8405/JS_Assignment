@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="box">마우스를 올려보세요.</p>
+
+    <script>
+        // mouseover -> 글씨를 orange 색으로 변경
+        // mouseout -> 글씨를 black 색으로 변경
+
+        const box = document.querySelector("#box");
+
+        // function changeColorToOrange() {
+        //     box.style.color = "orange";
+        // };
+
+        // function changeColorToBlack() {
+        //     box.style.color = "black";
+        // };
+
+        // box.addEventListener("mouseover", changeColorToOrange);
+        // box.addEventListener("mouseout", changeColorToBlack);
+
+        // 위에 함수를 내부에 선언하는 방식도 있음 -> 이벤트 리스너를 등록할 떄, 함수 정의를 동시에 할 수 있음
+        // box.addEventListener("mouseover", function () {
+        //     box.style.color = "orange";
+        // });
+        // box.addEventListener("mouseout", function() {
+        //     box.style.color = "black";
+        // });
+
+        // 더 간단하게 화살표 함수 사용 가능
+        // 예시로 하나로만 보여주면,
+        // box.addEventListener("mouseover", () => box.style.color = "orange");
+        // 화살표 함수 내의 코드가 한 줄이면 중괄호 제거해서 이렇게 한 줄로도 가능함
+
+        function changeColor(color) {
+            box.style.color = color;
+        }
+
+        box.addEventListener("mouseover", () => changeColor("orange"));
+        box.addEventListener("mouseout", () => changeColor("black"));
+
+        // 결론
+        // 1) `() => {}` 형태를 보면 '함수'라고 해석한다.
+        // 2) addEventListener(이벤트, 함수)를 호출할 때, 두 번째 인자는 '함수 자체'여야 하며, 실행된 결과를 넣으면 안됨
+    </script>
+</body>
+</html>
