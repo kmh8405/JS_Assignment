@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Timer API</h1>
+    <button id="start">카운트다운 시작</button>
+    <p id="time"></p>
+
+    <script>
+        // setTimeout: 일정 시간이 지난 뒤에 함수를 한 번 실행
+        // function alertTimeout() {
+        //     alert("타임아웃이 종료되었습니다.");
+        // };
+
+        // // 3s = 3000ms
+        // setTimeout(alertTimeout, 3000);
+
+        // 위 함수를 간단하게 표현
+        // 1) 함수 표현식
+        // setTimeout(function () {
+        //     alert("타임아웃이 종료되었습니다.");
+        // }, 3000);
+
+        // 2) 화살표 함수
+        // setTimeout(() => alert("타임아웃이 종료되었습니다."), 3000);
+
+        // -------------------------------------------------
+        // setInterval(함수, 시간(ms)): 일정 시간마다 함수를 반복 실행
+        // setInterval(() => alert("3초가 경과되었습니다."), 3000);
+
+        // -------------------------------------------------
+        const startBtn = document.querySelector("#start");
+        const timeEl = document.querySelector("#time");
+
+        let timeLeft = 10;
+        let timerId = null; // 초기화
+
+        // start 버튼에 이벤트 리스너 추가
+        startBtn.addEventListener("click", () => {
+            // 이미 등록된 타이머가 있으면 무시한다. -> 중간에 버튼 눌러도 아무 반응 X
+            if (timerId !== null) {
+                return // 반환, 종료의 의미
+            };
+
+            // 버튼을 아예 비활성화 하는 방법도 있음
+            startBtn.disabled = true;
+
+            // 카운트 다운 -> N초에서 0초로 1초씩 줄이기 : n--
+            // 줄어드는 초를 화면에서 시각적으로 확인
+            timeEl.textContent = timeLeft;
+            
+            // 1초마다, timeLeft를 1 줄이고, 화면에 변경된 값을 출력
+            timerId = setInterval(() => {
+                timeLeft--;
+
+                if (timeLeft === 0) {
+                    // timer 중지
+                    timeEl.textContent = "타이머 종료!";
+                    clearInterval(timerId); // clearInterval은 setInterval의 id 필요
+                    timeLeft = 10; // 처음 세팅한 초로 복구
+                    timerId = null; // 타이머가 종료되면 초기화
+                    startBtn.disabled = true; // 버튼 비활성화
+                } else {
+                    // N초(timeLeft >= 0인 경우, 계속 인터벌 진행)
+                    timeEl.textContent = timeLeft;
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
